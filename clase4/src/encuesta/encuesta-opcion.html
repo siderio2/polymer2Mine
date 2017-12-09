@@ -84,8 +84,24 @@
       toggle() {
         this.marcada = !this.marcada;
       }
+
+      ready() {
+        super.ready();
+        //this.addEventListener('click', this.procesaClick);
+        /*
+        *para asegurarnos de que o contexto é o mesmo, bindeamos 'this'
+        */
+        this.addEventListener('click', this.procesaClick.bind(this));
+
+      }
+
+      procesaClick() {
+        this.respuesta = "cambiada";
+        console.log('click');
+      }
     }
 
+    
     window.customElements.define(EncuestaOpcion.is, EncuestaOpcion);
   </script>
 </dom-module>

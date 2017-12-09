@@ -70,6 +70,8 @@
       ready() {
         super.ready();
         this.cuentaAtras();
+
+        window.addEventListener('mousemove', this.mostrarMovimiento);
       }
 
       cuentaAtras() {
@@ -80,14 +82,19 @@
         *
         SOLUCIÓN: arrow function:*/
         this.temporizador = setTimeout(() => {
-          console.log(this.segundos);
+          //console.log(this.segundos);
           this.cuentaAtras();
         }, 1000);
       }
 
       disconnectedCallback() {
         super.disconnectedCallback();
-        clearTimeout(this.temporizador);//
+        clearTimeout(this.temporizador);//deténse o proceso do timeout
+        window.removeEventListener('mousemove', this.mostrarMovimiento);
+      }
+
+      mostrarMovimiento(e) {
+        console.log('X->', e.x, ' / Y->', e.y);
       }
     }
     window.customElements.define(EncuestaPregunta.is, EncuestaPregunta);
