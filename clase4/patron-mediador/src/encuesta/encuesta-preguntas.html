@@ -1,0 +1,50 @@
+<link rel="import"  href="../../bower_components/polymer/polymer-element.html">
+
+<link rel="import" href="./encuesta-opcion.html">
+
+<dom-module id="encuesta-preguntas">
+  <template>
+    <style>
+      :host {
+        display: block;
+        margin: 15px;
+      }
+    </style>
+
+    <template is="dom-repeat" items="[[cuestion.opciones]]" as="opcion">
+      <encuesta-opcion
+        respuesta="[[opcion]]"
+        id="[[index]]"
+        marcada="[[marcada]]"
+        on-opcion-marcada="registraOpcionMarcada"
+      ></encuesta-opcion>
+    </template>
+
+  </template>
+
+  <script>
+    class EncuestaPreguntas extends Polymer.Element {
+      static get is() {
+        return 'encuesta-preguntas';
+      }
+
+      static get properties() {
+        return {
+          cuestion: Object,//Pásanola o pai
+          marcada: {
+            type: Number,
+            value: null,
+          }
+        };
+      }
+
+      registraOpcionMarcada(e) {
+        this.marcada = e.detail.id;
+      }
+
+
+    }
+
+    window.customElements.define(EncuestaPreguntas.is, EncuestaPreguntas);
+  </script>
+</dom-module>

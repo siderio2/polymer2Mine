@@ -1,0 +1,46 @@
+<link rel="import"  href="../../bower_components/polymer/polymer-element.html">
+<link rel="import"  href="../../bower_components/polymer/lib/elements/dom-repeat.html">
+
+<link rel="import" href="./encuesta-preguntas.html">
+
+<dom-module id="encuesta-element">
+  <template>
+    <style>
+      :host {
+        display: block;
+        margin: 15px;
+      }
+    </style>
+
+    <encuesta-timer></encuesta-timer>
+    <encuesta-preguntas cuestion="[[cuestion]]"></encuesta-preguntas>
+  </template>
+
+  <script>
+    class EncuestaElement extends Polymer.Element {
+      static get is() {
+        return 'encuesta-element';
+      }
+
+      static get properties() {
+        return {
+          cuestion: {
+            type: Object,
+            value: function() {
+              return {
+                pregunta: 'Bueno, qué facemos??',
+                opciones: [
+                'Arrasar Xerusalén',
+                'Pasar de todo',
+                'Invadir USA',
+                'Seguir practicando o terrorismo indiscriminado',
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+    window.customElements.define(EncuestaElement.is, EncuestaElement);
+  </script>
+</dom-module>
