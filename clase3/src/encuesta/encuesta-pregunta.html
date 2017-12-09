@@ -1,0 +1,67 @@
+<link rel="import"  href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="./encuesta-opcion.html">
+
+<dom-module id="encuesta-pregunta">
+  <template>
+    <style>
+      :host {
+        display: block;
+        margin: 15px;
+      }
+      .timer {
+        display: inline-block;
+        border: 1px solid #585805;
+        background-color: #CC0809; 
+      }
+      .timer h5 {
+        margin: 3px;
+        color: #FFFFFF;
+      }
+    </style>
+
+    <div class="timer">
+      <h5>Tempo restante: [[segundos]]</h5>
+    </div>
+
+    <h3>[[pregunta]]</h3>
+    
+    <!--template de repetición-->
+    <template is="dom-repeat" items="[[respuestas]]" as="respuesta">
+      <encuesta-opcion respuesta="[[respuesta]]"></encuesta-opcion>
+    </template>
+
+    <button on-click="resetTime">Resetea o crono</button>
+    
+
+  </template>
+
+  <script>
+    class EncuestaPregunta extends Polymer.Element {
+      static get is() {
+        return 'encuesta-pregunta';
+      }
+
+      static get properties() {
+        return {
+          pregunta: String,
+          respuestas: {
+            type: Array,
+            value: function() {
+              return ['Se cadra', 'Cando me peta', 'Se me deixa a muller, si']
+            },
+          },
+          segundos: {
+            type: Number,
+            value: 10,
+            readOnly: true,
+          }
+        }
+      }
+
+      resetTime() {
+        this._setSegundos(10);
+      }
+    }
+    window.customElements.define(EncuestaPregunta.is, EncuestaPregunta);
+  </script>
+</dom-module>

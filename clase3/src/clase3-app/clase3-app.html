@@ -1,0 +1,48 @@
+<!--Importamos as dependencias-->
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../sandbox/componente-basico.html">
+<link rel="import" href="../encuesta/encuesta-pregunta.html">
+
+
+<!--Engloba todo o compoñente-->
+<dom-module id="clase3-app">
+
+  <!--Parte visual do compoñente: HTML e CSS-->
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+
+    <encuesta-pregunta
+      pregunta="Imos tomar algo?"
+    ></encuesta-pregunta>
+  </template>
+
+  <!--Rexistra a compoñente e define a súa funcionalidade-->
+  <script>
+    /**
+     * @customElement
+     * @polymer
+     */
+    class Clase3App extends Polymer.Element {
+      static get is() { return 'clase3-app'; }
+      static get properties() {
+        return {
+          prop1: {
+            type: String,
+            value: 'clase3-app'
+          }
+        };
+      }
+
+      manipular() {
+        //this.$.basico.prop = "prop manipulada dende fora"
+        this.$.basico.cambiarProp("propiedade modificada chamando dende o pai un método do fillo")
+      }
+    }
+    /*Rexistro do compoñente*/
+    window.customElements.define(Clase3App.is, Clase3App);
+  </script>
+</dom-module>
