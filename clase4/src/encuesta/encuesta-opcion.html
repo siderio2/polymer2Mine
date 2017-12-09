@@ -34,7 +34,7 @@
     <p 
     on-click="toggle"
     class$="[[clase]]" 
-    ><iron-icon icon="[[icono]]"></iron-icon><span class="respuesta">[[respuesta]]</span></p>
+    ><iron-icon icon="[[icono]]"></iron-icon><span class="respuesta">([[num]]) [[respuesta]]</span></p>
     <!-- <template is="dom-if" if=[[marcada]]>
     </template> 
    <iron-icon icon="check-box-outline-blank"></iron-icon> <p hidden$="[[!marcada]]">Está marcada</p>-->
@@ -64,6 +64,7 @@
             type: String,
             computed: '_calcularClase(marcada)',
           },
+          num: Number,
         }
       }
 
@@ -83,6 +84,14 @@
 
       toggle() {
         this.marcada = !this.marcada;
+        this.dispatchEvent(new CustomEvent('marcada', {
+          detail: {
+            id: this.num,
+          },
+          //para que o evento se propague máis alá do pai:
+          bubbles: true,
+          composed: true,
+        }));
       }
 
       ready() {

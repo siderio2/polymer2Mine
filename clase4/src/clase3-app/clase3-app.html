@@ -18,6 +18,7 @@
     <encuesta-pregunta
       id="encuesta"
       pregunta="Imos tomar algo?"
+      on-marcada="marcadaOpcionAbuelo"
     ></encuesta-pregunta>
 
     <button on-click="quitarEncuesta">Eliminar</button>
@@ -48,6 +49,10 @@
       manipular() {
         //this.$.basico.prop = "prop manipulada dende fora"
         this.$.basico.cambiarProp("propiedade modificada chamando dende o pai un método do fillo")
+      }
+
+      marcadaOpcionAbuelo(e) {
+        console.log('O abuelo xa sabe que marcaches a opción ', e.detail.id);
       }
     }
     /*Rexistro do compoñente*/
