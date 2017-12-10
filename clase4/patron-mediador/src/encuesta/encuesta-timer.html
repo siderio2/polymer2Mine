@@ -1,4 +1,4 @@
-<link rel="import"  href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
 
 <dom-module id="encuesta-timer">
   <template>
@@ -11,7 +11,8 @@
       .timer {
         display: flex;
         flex-flow: row nowrap;
-        justify-content: space-around;
+        /*justify-content: space-around;*/
+        justify-content: flex-start;
       }
 
       .crono p {
@@ -21,7 +22,9 @@
       .crono {
         background-color: #FF0000;
         color: #FFFFFF;
-        font-family: Arial;
+        font-family: Arial;               
+        border: 1px solid #BB00C0;
+        border-radius: 5px;
       }
 
       .reset-crono button {
@@ -40,9 +43,9 @@
       <div class="crono">
         <p>Queda(n) [[segundos]] segundo(s).</p>
       </div>
-      <div class="reset-crono">
+      <!-- <div class="reset-crono">
         <button on-click="reiniciaCrono">Reinicia a conta atrás</button>
-      </div>
+      </div> -->
     </div>
 
   </template>
@@ -57,7 +60,7 @@
         return {
           segundos: {
             type: Number,
-            value: 10,
+            value: 3,
             readOnly: true,
           }
         }
@@ -76,17 +79,24 @@
           setTimeout(() => {
             this.cuentaAtras();
           }, 1000);
+        }else{
+          this.dispatchEvent(new CustomEvent('tiempo-finalizado'));
         }
       }
 
       reiniciaCrono() {
         let segundosFaltan = this.segundos;
-        this._setSegundos(10);
+        this._setSegundos(3);
         if (segundosFaltan === 0){
           setTimeout(() => {
             this.cuentaAtras();
           }, 1000);
         }
+      }
+
+      disconnectedCallback() {
+        super.disconnectedCallback();
+        clearTimeout(this.temporizador);
       }
     }
     window.customElements.define(EncuestaTimer.is, EncuestaTimer);

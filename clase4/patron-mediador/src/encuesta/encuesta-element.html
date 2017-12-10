@@ -1,5 +1,6 @@
 <link rel="import"  href="../../bower_components/polymer/polymer-element.html">
 <link rel="import"  href="../../bower_components/polymer/lib/elements/dom-repeat.html">
+<link rel="import" href="../../bower_components/polymer/lib/mixins/gesture-event-listeners.html">
 
 <link rel="import" href="./encuesta-preguntas.html">
 <link rel="import" href="./encuesta-timer.html">
@@ -11,20 +12,41 @@
         display: block;
         margin: 15px;
       }
+
+      encuesta-timer {
+      /*Para evitar que se seleccione o texto do timer cando arrastramos*/
+        user-select: none;
+        position: relative;
+      }
     </style>
 
-    <encuesta-timer></encuesta-timer>
-    <encuesta-preguntas cuestion="[[cuestion]]"></encuesta-preguntas>
+    <encuesta-timer
+    id="timer"
+    on-tiempo-finalizado="cancelarEncuesta"
+    on-track="arrastrar"
+    ></encuesta-timer>
+    <template is="dom-if" if={{!cancelada}}>
+      <encuesta-preguntas cuestion="[[cuestion]]"></encuesta-preguntas>
+    </template>
+
+    <template is="dom-if" if={{cancelada}}>
+      <p>Arrastra o temporizador para resetear o tempo da enquisa.</p>
+    </template>
+    
   </template>
 
   <script>
-    class EncuestaElement extends Polymer.Element {
+    class EncuestaElement extends Polymer.GestureEventListeners(Polymer.Element) {
       static get is() {
         return 'encuesta-element';
       }
 
       static get properties() {
         return {
+          cancelada: {
+            type: Boolean,
+            value: false,
+          },
           cuestion: {
             type: Object,
             value: function() {
@@ -37,6 +59,25 @@
                 'Seguir practicando o terrorismo indiscriminado',
                 ]
               }
+            }
+          }
+        }
+      }
+
+      cancelarEncuesta() {
+        this.cancelada = true;
+      }
+
+      arrastrar(e) {
+        //console.log(e);
+        if (this.cancelada) {
+          if (e.detail.state != 'end') {
+            this.$.timer.style.left = e.detail.dx + 'px';
+          }else{
+            this.$.timer.style.left = 0 + 'px';
+            if (e.detail.dx > 49) {
+              this.cancelada = false;
+              this.$.timer.reiniciaCrono();
             }
           }
         }
