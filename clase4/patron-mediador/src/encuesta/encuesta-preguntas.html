@@ -46,6 +46,31 @@
         this.marcada = e.detail.id;
       }
 
+      ready() {
+        super.ready();
+        /*evento de teclado con arrow function: no disconnectedCallback non temos referencia a esta función para eliminala:
+        window.addEventListener('keypress', (e) => {
+          let num = parseInt(e.key);
+          if(!isNaN(num) && num > 0 && num <= this.cuestion.opciones.length) {
+            this.marcada = num - 1;
+          }
+        })*/
+        window.addEventListener('keypress', this.marcarConTeclado.bind(this));
+      }
+
+      //manexamos o evento nunha función con nome para poder eliminala:
+      marcarConTeclado(e) {
+        let num = parseInt(e.key);
+        if(!isNaN(num) && num > 0 && num <= this.cuestion.opciones.length) {
+          this.marcada = num - 1;
+        }
+      }
+
+      disconnectedCallback() {
+        super.disconnectedCallback();
+        window.removeEventListener('keypress', this.marcarConTeclado);
+      }
+
 
     }
 
