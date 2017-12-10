@@ -2,6 +2,7 @@
 <link rel="import" href="../../bower_components/paper-input/paper-input.html">
 
 <link rel="import" href="./two-ways.html">
+<link rel="import" href="../input-bindeable/input-bindeable.html">
 
 <dom-module id="clase6-app">
   <template>
@@ -16,6 +17,9 @@
 
     <h3>Nome: [[nombre]]</h3>
     <two-ways nombre="{{nombre}}"></two-ways>
+
+    <input-bindeable value={{nombre}} label="nome"></input-bindeable>
+    <input type="text" value="{{nombre::input}}">
   </template>
 
   <script>
