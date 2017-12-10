@@ -1,24 +1,94 @@
 <link rel="import"  href="../../bower_components/polymer/polymer-element.html">
 
-<dom-module id="componente-basico">
+<dom-module id="encuesta-timer">
   <template>
     <style>
       :host {
         display: block;
         margin: 15px;
       }
+
+      .timer {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: space-around;
+      }
+
+      .crono p {
+        margin: 3px;
+      }
+
+      .crono {
+        background-color: #FF0000;
+        color: #FFFFFF;
+        font-family: Arial;
+      }
+
+      .reset-crono button {
+        background-color: #33FF33;
+        height: 100%;
+        border: none;
+        cursor: pointer;
+      }
+
+      .reset-crono button, .crono p {
+        font-size: 1.1rem;
+      }
     </style>
 
-    <p>Este es el template del componente!</p>
+    <div class="timer">
+      <div class="crono">
+        <p>Queda(n) [[segundos]] segundo(s).</p>
+      </div>
+      <div class="reset-crono">
+        <button on-click="reiniciaCrono">Reinicia a conta atrás</button>
+      </div>
+    </div>
 
   </template>
 
   <script>
-    class ComponenteBasico extends Polymer.Element {
+    class EncuestaTimer extends Polymer.Element {
       static get is() {
-        return 'componente-basico';
+        return 'encuesta-timer';
+      }
+
+      static get properties() {
+        return {
+          segundos: {
+            type: Number,
+            value: 10,
+            readOnly: true,
+          }
+        }
+      }
+
+      ready() {
+        super.ready();
+        setTimeout(() => {
+          this.cuentaAtras();
+        }, 1000);
+      }
+
+      cuentaAtras() {
+        if (this.segundos > 0) {
+          this._setSegundos(this.segundos - 1);
+          setTimeout(() => {
+            this.cuentaAtras();
+          }, 1000);
+        }
+      }
+
+      reiniciaCrono() {
+        let segundosFaltan = this.segundos;
+        this._setSegundos(10);
+        if (segundosFaltan === 0){
+          setTimeout(() => {
+            this.cuentaAtras();
+          }, 1000);
+        }
       }
     }
-    window.customElements.define(ComponenteBasico.is, ComponenteBasico);
+    window.customElements.define(EncuestaTimer.is, EncuestaTimer);
   </script>
 </dom-module>
