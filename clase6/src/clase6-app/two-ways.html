@@ -1,0 +1,38 @@
+<link rel="import"  href="../../bower_components/polymer/polymer-element.html">
+
+<dom-module id="two-ways">
+  <template>
+    <style>
+      :host {
+        display: block;
+        margin: 15px;
+      }
+    </style>
+
+    <p>Mostrando nombre: [[nombre]]</p>
+    <button on-click="borrarNombre">Borrar</button>
+
+  </template>
+
+  <script>
+    class TwoWays extends Polymer.Element {
+      static get is() {
+        return 'two-ways';
+      }
+
+      static get properties() {
+        return {
+          nombre: {
+            type: String,
+            notify: true,
+          }
+        }
+      }
+
+      borrarNombre() {
+        this.nombre = 'Desi';
+      }
+    }
+    window.customElements.define(TwoWays.is, TwoWays);
+  </script>
+</dom-module>
