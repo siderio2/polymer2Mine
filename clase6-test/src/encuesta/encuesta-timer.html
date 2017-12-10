@@ -1,0 +1,104 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+
+<dom-module id="encuesta-timer">
+  <template>
+    <style>
+      :host {
+        display: block;
+        margin: 15px;
+      }
+
+      .timer {
+        display: flex;
+        flex-flow: row nowrap;
+        /*justify-content: space-around;*/
+        justify-content: flex-start;
+      }
+
+      .crono p {
+        margin: 3px;
+      }
+
+      .crono {
+        background-color: #FF0000;
+        color: #FFFFFF;
+        font-family: Arial;               
+        border: 1px solid #BB00C0;
+        border-radius: 5px;
+      }
+
+      .reset-crono button {
+        background-color: #33FF33;
+        height: 100%;
+        border: none;
+        cursor: pointer;
+      }
+
+      .reset-crono button, .crono p {
+        font-size: 1.1rem;
+      }
+    </style>
+
+    <div class="timer">
+      <div class="crono">
+        <p>Queda(n) [[segundos]] segundo(s).</p>
+      </div>
+      <!-- <div class="reset-crono">
+        <button on-click="reiniciaCrono">Reinicia a conta atrás</button>
+      </div> -->
+    </div>
+
+  </template>
+
+  <script>
+    class EncuestaTimer extends Polymer.Element {
+      static get is() {
+        return 'encuesta-timer';
+      }
+
+      static get properties() {
+        return {
+          segundos: {
+            type: Number,
+            value: 60,
+            readOnly: true,
+          }
+        }
+      }
+
+      ready() {
+        super.ready();
+        setTimeout(() => {
+          this.cuentaAtras();
+        }, 1000);
+      }
+
+      cuentaAtras() {
+        if (this.segundos > 0) {
+          this._setSegundos(this.segundos - 1);
+          setTimeout(() => {
+            this.cuentaAtras();
+          }, 1000);
+        }else{
+          this.dispatchEvent(new CustomEvent('tiempo-finalizado'));
+        }
+      }
+
+      reiniciaCrono() {
+        let segundosFaltan = this.segundos;
+        this._setSegundos(60);
+        if (segundosFaltan === 0){
+          setTimeout(() => {
+            this.cuentaAtras();
+          }, 1000);
+        }
+      }
+
+      disconnectedCallback() {
+        super.disconnectedCallback();
+        clearTimeout(this.temporizador);
+      }
+    }
+    window.customElements.define(EncuestaTimer.is, EncuestaTimer);
+  </script>
+</dom-module>

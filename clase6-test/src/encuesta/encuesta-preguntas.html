@@ -1,0 +1,85 @@
+<link rel="import"  href="../../bower_components/polymer/polymer-element.html">
+
+<link rel="import" href="./encuesta-opcion.html">
+
+<dom-module id="encuesta-preguntas">
+  <template>
+    <style>
+      :host {
+        display: block;
+        margin: 15px;
+      }
+    </style>
+
+    
+
+    <p class="pregunta">[[cuestion.pregunta]]</p>
+
+    <template is="dom-repeat" items="[[cuestion.opciones]]" as="opcion">
+      <encuesta-opcion
+        respuesta="[[opcion]]"
+        id="[[index]]"
+        marcada="[[marcada]]"
+        on-opcion-marcada="registraOpcionMarcada"
+      ></encuesta-opcion>
+    </template>
+
+    <button on-click="mostrarPista">Dame unha pista</button>
+
+  </template>
+
+  <script>
+    class EncuestaPreguntas extends Polymer.Element {
+      static get is() {
+        return 'encuesta-preguntas';
+      }
+
+      static get properties() {
+        return {
+          cuestion: Object,//Pásanola o pai
+          marcada: {
+            type: Number,
+            value: null,
+          }
+        };
+      }
+
+      registraOpcionMarcada(e) {
+        this.marcada = e.detail.id;
+      }
+
+      ready() {
+        super.ready();
+        /*evento de teclado con arrow function: no disconnectedCallback non temos referencia a esta función para eliminala:
+        window.addEventListener('keypress', (e) => {
+          let num = parseInt(e.key);
+          if(!isNaN(num) && num > 0 && num <= this.cuestion.opciones.length) {
+            this.marcada = num - 1;
+          }
+        })*/
+        window.addEventListener('keypress', this.marcarConTeclado.bind(this));
+      }
+
+      //manexamos o evento nunha función con nome para poder eliminala:
+      marcarConTeclado(e) {
+        let num = parseInt(e.key);
+        if(!isNaN(num) && num > 0 && num <= this.cuestion.opciones.length) {
+          this.marcada = num - 1;
+        }
+      }
+
+      mostrarPista() {
+        this.set('cuestion.pregunta', this.cuestion.pregunta + ' (PISTA: ' + this.cuestion.pista + ').');
+      }
+
+      disconnectedCallback() {
+        super.disconnectedCallback();
+        window.removeEventListener('keypress', this.marcarConTeclado);
+      }
+
+
+    }
+
+    window.customElements.define(EncuestaPreguntas.is, EncuestaPreguntas);
+  </script>
+</dom-module>

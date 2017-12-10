@@ -1,0 +1,35 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+
+<link rel="import" href="../encuesta/encuesta-element.html">
+
+<dom-module id="patron-mediador-app">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    
+    <encuesta-element></encuesta-element>
+  </template>
+
+  <script>
+    /**
+     * @customElement
+     * @polymer
+     */
+    class PatronMediadorApp extends Polymer.Element {
+      static get is() { return 'patron-mediador-app'; }
+      static get properties() {
+        return {
+          prop1: {
+            type: String,
+            value: 'patron-mediador-app'
+          }
+        };
+      }
+    }
+
+    window.customElements.define(PatronMediadorApp.is, PatronMediadorApp);
+  </script>
+</dom-module>
