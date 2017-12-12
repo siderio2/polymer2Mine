@@ -1,5 +1,7 @@
-<link rel="import"  href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/polymer/lib/elements/dom-repeat.html">
 
+<link rel="import" href="../input-bindeable/input-bindeable.html">
 <link rel="import" href="./encuesta-opcion.html">
 
 <dom-module id="encuesta-preguntas">
@@ -26,6 +28,9 @@
 
     <button on-click="mostrarPista">Dame unha pista</button>
 
+    <h2>Outras respostas:</h2>
+    <input-bindeable label="Ocurrencias, please..." value="{{outraResposta}}"></input-bindeable>
+    <button on-click="agregarResposta">Agregar</button>
   </template>
 
   <script>
@@ -40,7 +45,11 @@
           marcada: {
             type: Number,
             value: null,
-          }
+          },
+          outraResposta: {
+            type: String,
+            value: "",
+          },
         };
       }
 
@@ -69,7 +78,18 @@
       }
 
       mostrarPista() {
+
         this.set('cuestion.pregunta', this.cuestion.pregunta + ' (PISTA: ' + this.cuestion.pista + ').');
+      }
+
+      agregarResposta() {
+        //this.cuestion.opciones.push(this.outraResposta);
+        if (this.outraResposta != "") {
+          this.push('cuestion.opciones', this.outraResposta);
+          this.marcada = this.cuestion.opciones.length -1;
+          this.outraResposta = "";
+        }
+        
       }
 
       disconnectedCallback() {
