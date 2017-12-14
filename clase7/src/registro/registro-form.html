@@ -1,0 +1,81 @@
+<link rel="import"  href="../../bower_components/polymer/polymer-element.html">
+
+<link rel="import" href="../input-bindeable/input-bindeable.html">
+<link rel="import" href="../input-password/password-element.html">
+
+<dom-module id="registro-form">
+  <template>
+    <style>
+      :host {
+        display: block;
+        margin: 15px;
+      }
+    </style>
+    
+    <p>
+      <input-bindeable label="Nome" value="{{user.nombre}}"></input-bindeable>
+      <button on-click="borrarNombre">Borrar</button>
+    </p>
+
+    <p>
+      <input-bindeable label="E-mail" value="{{user.email}}"></input-bindeable>
+    </p>
+
+    <p>
+      <password-element></password-element>
+    </p>
+
+    <div class="nota">
+      <h2>Datos do formularo:</h2>
+      <p>
+        <span>Nome: </span>[[user.nombre]]
+      </p>
+      <p>
+        <span>Email: </span>[[user.email]]
+      </p>
+    </div>
+  </template>
+
+  <script>
+    class RegistroForm extends Polymer.Element {
+      static get is() {
+        return 'registro-form';
+      }
+
+      static get properties() {
+        return {
+          user: {
+            type: Object,
+            value: function() {
+              return {
+                nombre: '',
+                password: '',
+                email: '',
+              }
+            },
+            observer: 'cambiadoUser',
+          },
+        }
+      }
+
+      static get observers() {
+        return [
+          'nombreChanged(user.nombre)'
+        ]
+      }
+
+      nombreChanged(nombre) {
+        console.log('novo nome: ', nombre);
+      }
+
+      cambiadoUser() {
+        console.log('User noviño do trinque');
+      }
+
+      borrarNombre() {
+        this.set('user.nombre', '');
+      }
+    }
+    window.customElements.define(RegistroForm.is, RegistroForm);
+  </script>
+</dom-module>
