@@ -2,6 +2,7 @@
 
 <link rel="import" href="../input-bindeable/input-bindeable.html">
 <link rel="import" href="../input-password/password-element.html">
+<link rel="import" href="../intereses/intereses-element.html">
 
 <dom-module id="registro-form">
   <template>
@@ -24,6 +25,8 @@
     <p>
       <password-element></password-element>
     </p>
+
+    <intereses-element></intereses-element>
 
     <div class="nota">
       <h2>Datos do formularo:</h2>
@@ -65,11 +68,11 @@
       }
 
       nombreChanged(nombre) {
-        console.log('novo nome: ', nombre);
+        //console.log('novo nome: ', nombre);
       }
 
       cambiadoUser() {
-        console.log('User noviño do trinque');
+        //console.log('User noviño do trinque');
       }
 
       borrarNombre() {
