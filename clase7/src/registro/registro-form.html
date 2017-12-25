@@ -63,12 +63,16 @@
 
       static get observers() {
         return [
-          'nombreChanged(user.nombre)'
+          '_nombreChanged(user.nombre)',
+          '_userChanged(user.*)',//Utilizamos un observer a path 'user.*'
         ]
       }
-
-      nombreChanged(nombre) {
+      _nombreChanged(nombre) {
         //console.log('novo nome: ', nombre);
+      }
+
+      _userChanged(changeRecord) {
+        //console.log(changeRecord);
       }
 
       cambiadoUser() {

@@ -9,6 +9,10 @@
       :host {
         display: block
       }
+
+      .btn-cambio {
+        background-color: #008062;
+      }
     </style>
       <template is="dom-if" if="{{!maximo}}">
         <label for="interes">Dime, qué che interesa?</label>
@@ -23,6 +27,9 @@
       <!-- <span>-[[index]]-></span> -->
       <intereses-item interes="[[interesItem]]" id="[[index]]" on-borrar="borrarInteres"></intereses-item>    
     </template>
+    <div>
+      <button class="btn-cambio" on-click="cambiarCasilla">Cambiar</button>
+    </div>
 
   </template>
 
@@ -77,13 +84,20 @@
         this.splice('intereses', id, 1);
       }
 
+      cambiarCasilla(){
+        if (this.intereses.length > 0) {
+          this.set('intereses.0', 'valor cambiado con this.set');
+        } 
+      }
+
       /**
         * Array of strings describing multi-property observer methods and their
         * dependant properties
         */
       static get observers() {
         return [
-          '_interesesChanged(intereses.splices)'
+          '_interesesChanged(intereses.splices)',
+          '_interesesCasillasChanged(intereses.*)',
         ];
       }
 
@@ -96,6 +110,10 @@
             this.maximo = false;
           }
         }
+      }
+
+      _interesesCasillasChanged(changeRecord) {
+        console.log(changeRecord);        
       }
 
       /**
