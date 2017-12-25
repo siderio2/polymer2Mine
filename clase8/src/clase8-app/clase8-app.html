@@ -1,0 +1,42 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../ficha-usuario/ficha-usuario.html">
+
+<dom-module id="clase8-app">
+  <template>
+    <style>
+      :host {
+        display: block;
+        background-color: #dddddd;
+        border-radius: 15px;
+        padding: 30px;
+      }
+    </style>
+    <slot></slot>
+    <h2>Hello [[prop1]]!</h2>
+    <ficha-usuario>
+      Desi
+      <p slot="perfil">Web Developer</p>
+      <span slot="twitter" id="twitter">@siderio2</span>
+    </ficha-usuario>
+  </template>
+
+  <script>
+    /**
+     * @customElement
+     * @polymer
+     */
+    class Clase8App extends Polymer.Element {
+      static get is() { return 'clase8-app'; }
+      static get properties() {
+        return {
+          prop1: {
+            type: String,
+            value: 'clase8-app'
+          }
+        };
+      }
+    }
+
+    window.customElements.define(Clase8App.is, Clase8App);
+  </script>
+</dom-module>
