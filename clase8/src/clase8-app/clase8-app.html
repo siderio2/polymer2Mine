@@ -1,5 +1,9 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/paper-spinner/paper-spinner.html">
+<link rel="import" href="../../bower_components/paper-slider/paper-slider.html">
+
 <link rel="import" href="../ficha-usuario/ficha-usuario.html">
+<link rel="import" href="../password-strength-bar.html">
 
 
 <dom-module id="clase8-app">
@@ -10,8 +14,38 @@
         background-color: #dddddd;
         border-radius: 15px;
         padding: 30px;
+        --paper-spinner-layer-1-color: rgb(235, 20, 170);
+        --paper-spinner-layer-2-color: rgb(235, 20, 170);
+        --paper-spinner-layer-3-color: rgb(235, 20, 170);
+        --paper-spinner-layer-4-color: rgb(235, 20, 170);
+        --paper-slider-knob-color: red;
+        --password-strength-bar-background-color: #67f;
+        --password-strength-bar-encendido-color: rgb(240, 236, 10);
+        --paper-slider-input: {
+            background-color: yellow;
+            padding: 5px;
+            width: 50px;
+        }
+      }
+      paper-spinner {
+        --paper-spinner-stroke-width: 7px;
+      }
+      password-strength-bar {
+        --password-strength-bar-box: {
+          border-radius: 50%;
+          padding: 20px;
+        }
+        --password-strength-bar-items: {
+          height: 25px;
+          width: 15px;
+          border: 1px solid red;
+          border-radius: 8px;
+        }
       }
     </style>
+    <div class="spinner">
+      <paper-spinner active></paper-spinner>
+    </div>
     <slot></slot>
     <h2>Hello [[prop1]]!</h2>
     <ficha-usuario>
@@ -22,6 +56,9 @@
     <p>
       Parágrafo en clase8-app.html
     </p>
+    <paper-slider min="0" max="10" step="1" value="{{valor}}" pin></paper-slider>
+    <!-- <p>Valor: [[valor]]</p> -->
+    <password-strength-bar fortaleza="[[valor]]"></password-strength-bar>
   </template>
 
   <script>
@@ -36,6 +73,10 @@
           prop1: {
             type: String,
             value: 'clase8-app'
+          },
+          valor: {
+            type: Number,
+            value: 0,
           }
         };
       }
