@@ -1,4 +1,5 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../util/event-mixin.html">
 <link rel="import" href="./input-bindeable.html">
 
 <dom-module id="input-bindeable-enter">
@@ -23,7 +24,10 @@
      * @polymer
      * @extends {Polymer.Element}
      */
-    class InputBindeableEnter extends InputBindeable {
+
+    const Base = EventMixin(InputBindeable);
+
+    class InputBindeableEnter extends Base {
       /**
        * String providing the tag name to register the element under.
        */
@@ -49,11 +53,12 @@
         this.addEventListener('keypress', (e) => {
           if (e.charCode == 13) {
             this.blur();//por min, para quitar o focus do input
-            this.dispatchEvent(new CustomEvent('enter-pulsado', {
+            this.fire('enter-pulsado', {value: this.value});
+            /* this.dispatchEvent(new CustomEvent('enter-pulsado', {
               detail: {
                 value: this.value,
               },
-            }))
+            })) */
           }
         })
       }

@@ -1,0 +1,22 @@
+<script>
+  const InputMixin = (superclass) => {
+      return class extends superclass {
+        /**
+          * Object describing property-related metadata used by Polymer features
+          */
+        static get properties() {
+          return {
+            label: {
+              type: String,
+              value: 'Label',
+            },
+            value: {
+              type: String,
+              value: '',
+              notify: true,
+            },
+          };
+        }
+      }
+    }
+</script>

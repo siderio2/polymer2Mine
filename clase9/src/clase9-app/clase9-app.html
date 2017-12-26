@@ -1,5 +1,7 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../input-bindeable/input-bindeable-enter.html">
+<link rel="import" href="../input-elements/input-text.html">
+<link rel="import" href="../input-elements/input-password.html">
 
 <dom-module id="clase9-app">
   <template>
@@ -9,6 +11,14 @@
       }
     </style>
     <input-bindeable-enter label="Escribe algo e pulsa enter" value="valor inicial" on-enter-pulsado="capturarValor"></input-bindeable-enter>
+
+    <hr>
+
+    <input-text label="Input text" value="text"></input-text>
+
+    <hr>
+
+    <input-password label="Input pass" value=""></input-password>
   </template>
 
   <script>

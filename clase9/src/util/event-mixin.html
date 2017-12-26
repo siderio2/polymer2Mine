@@ -1,0 +1,13 @@
+<script>
+  const EventMixin = function (superclass) {
+    return class extends superclass{
+      fire(eventName, data = {}) {
+        this.dispatchEvent(new CustomEvent(eventName, {
+          detail: data,
+          bubbles: true,
+          composed: true,
+        }));
+      }
+    }
+  }
+</script>
